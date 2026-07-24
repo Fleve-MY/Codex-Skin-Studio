@@ -39,9 +39,12 @@ dotnet publish $Project `
   -p:PublishSingleFile=false `
   -o $PublishDir
 
-$RuntimeSource = Join-Path $Root "runtime"
 $RuntimeTarget = Join-Path $PublishDir "runtime"
-Copy-Item -LiteralPath $RuntimeSource -Destination $RuntimeTarget -Recurse -Force
+New-Item -ItemType Directory -Force -Path $RuntimeTarget | Out-Null
+Copy-Item -LiteralPath (Join-Path $Root "runtime/assets") -Destination (Join-Path $RuntimeTarget "assets") -Recurse -Force
+Copy-Item -LiteralPath (Join-Path $Root "runtime/scripts") -Destination (Join-Path $RuntimeTarget "scripts") -Recurse -Force
+New-Item -ItemType Directory -Force -Path (Join-Path $RuntimeTarget "themes") | Out-Null
+Copy-Item -LiteralPath (Join-Path $Root "runtime/themes/README.md") -Destination (Join-Path $RuntimeTarget "themes/README.md") -Force
 
 Compress-Archive -Path (Join-Path $PublishDir "*") -DestinationPath $PortableZip -Force
 
@@ -59,7 +62,7 @@ if (-not $SkipInstaller) {
   dotnet publish $InstallerStubProject `
     -c Release `
     -r $RuntimeIdentifier `
-    --self-contained true `
+    --self-contained false `
     -p:Version=$Version `
     -p:FileVersion=$Version `
     -p:AssemblyVersion=$Version `
