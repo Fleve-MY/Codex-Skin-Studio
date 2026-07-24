@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Title>IcyFre Codex Studio</Title>
-    <AssemblyName>IcyFreCodexStudio</AssemblyName>
-    <AssemblyTitle>IcyFre Codex Studio</AssemblyTitle>
+    <Nullable>enable</Nullable>
+    <AssemblyName>IcyFreCodexStudioSetupStub</AssemblyName>
+    <Title>IcyFre Codex Studio Setup</Title>
     <Product>IcyFre Codex Studio</Product>
     <Company>IcyFre</Company>
   </PropertyGroup>
