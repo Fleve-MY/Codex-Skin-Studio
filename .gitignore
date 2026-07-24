@@ -1,0 +1,44 @@
+# Build outputs
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+
+# Local IDE / editor state
+.idea/
+.vs/
+.vscode/
+
+# Local workflow and agent cache
+.spec-workflow/
+
+# Transitional local notes from early manual-update iterations
+如何更新到优化版本.md
+更新说明-简化版.md
+样式未生效诊断.md
+重新构建.bat
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+Thumbs.db
+Desktop.ini
+
+# Local published app copy. Release packages should be uploaded as GitHub
+# Release assets instead of being committed as loose build artifacts.
+app/
+
+# Installer / publish artifacts
+dist/
+build/
+publish/
+artifacts/
+installer/output/
+*.msi
+*.msix
+*.nupkg
+*.zip

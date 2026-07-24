@@ -1,0 +1,25 @@
+{
+  "name": "\u3010\u54F2\u98CE\u58C1\u7EB8\u3011\u5C11\u5973-\u7EFF\u611F",
+  "slug": "\u3010\u54F2\u98CE\u58C1\u7EB8\u3011\u5C11\u5973-\u7EFF\u611F",
+  "createdAt": "2026-07-21T15:06:35",
+  "generation": {
+    "qualityPreset": "performance",
+    "width": 1600,
+    "height": 900,
+    "lightQuality": 84,
+    "darkQuality": 82
+  },
+  "effects": {
+    "material": "balanced"
+  },
+  "colors": {
+    "source": "natural",
+    "accent": "#B68B79",
+    "accentWarm": "#CAA7A2",
+    "accentCool": "#D3C6B8",
+    "accentDeep": "#785547",
+    "accentMist": "rgba(227, 223, 219, 0.12)",
+    "accentSoft": "rgba(182, 139, 121, 0.22)",
+    "accentText": "#FFFFFF"
+  }
+}

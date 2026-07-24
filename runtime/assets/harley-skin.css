@@ -1,0 +1,2086 @@
+:root {
+  --harley-panel: rgba(255, 255, 255, 0.28);
+  --harley-panel-strong: rgba(255, 255, 255, 0.38);
+  --harley-panel-soft: rgba(255, 255, 255, 0.16);
+  --harley-border: rgba(255, 255, 255, 0.28);
+  --harley-text-shadow: 0 1px 18px rgba(255, 255, 255, 0.42);
+  --harley-shadow: 0 18px 60px rgba(79, 45, 62, 0.1);
+  --harley-button-bg: rgba(255, 255, 255, 0.18);
+  --harley-button-hover: rgba(255, 255, 255, 0.28);
+  --harley-button-active: rgba(255, 255, 255, 0.12);
+  --harley-accent: #4BAFD4;
+  --harley-accent-warm: #6FC3DA;
+  --harley-accent-cool: #9AD9E8;
+  --harley-accent-deep: #286A82;
+  --harley-accent-mist: rgba(75, 175, 212, 0.1);
+  --harley-accent-soft: rgba(75, 175, 212, 0.22);
+  --harley-accent-text: #143243;
+  --harley-transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --harley-transition-spring: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html[data-harley-appearance="dark"] {
+  --harley-panel: rgba(24, 20, 16, 0.44);
+  --harley-panel-strong: rgba(38, 31, 24, 0.58);
+  --harley-panel-soft: rgba(18, 16, 14, 0.24);
+  --harley-border: rgba(211, 163, 92, 0.22);
+  --harley-text-shadow: 0 1px 18px rgba(0, 0, 0, 0.48);
+  --harley-shadow: 0 18px 70px rgba(0, 0, 0, 0.34);
+  --harley-button-bg: rgba(255, 255, 255, 0.08);
+  --harley-button-hover: rgba(255, 255, 255, 0.14);
+  --harley-button-active: rgba(255, 255, 255, 0.05);
+}
+
+html.harley-codex-skin,
+html.harley-codex-skin body {
+  background: transparent !important;
+}
+
+#harley-codex-skin-root {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#harley-codex-skin-root .harley-codex-backdrop {
+  position: absolute;
+  inset: 0;
+  background-image: var(--harley-background);
+  background-size: cover;
+  background-position: var(--harley-bg-x, 72%) var(--harley-bg-y, 45%);
+  filter: none;
+}
+
+#harley-codex-skin-root .harley-codex-workspace-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 68% 88% at 58% 46%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.24) 44%, rgba(255, 255, 255, 0.08) 74%, transparent 100%),
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-cool) 16%, transparent), color-mix(in srgb, var(--harley-accent-mist) 48%, transparent) 40%, rgba(255, 255, 255, 0.08) 72%, color-mix(in srgb, var(--harley-accent-warm) 10%, transparent)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(244, 252, 250, 0.12));
+}
+
+#harley-codex-skin-root .harley-codex-top-veil {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 132px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--harley-accent-deep) 8%, transparent), color-mix(in srgb, var(--harley-accent-mist) 24%, transparent) 46%, transparent 100%);
+}
+
+#harley-codex-skin-root .harley-codex-left-veil {
+  display: none;
+}
+
+#harley-codex-skin-root .harley-codex-bottom-veil {
+  display: none;
+}
+
+html.harley-codex-skin body > *:not(#harley-codex-skin-root) {
+  position: relative;
+  z-index: 1;
+}
+
+html.harley-codex-skin #root,
+html.harley-codex-skin #root > div,
+html.harley-codex-skin #root main,
+html.harley-codex-skin #root section {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"] {
+  position: relative !important;
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.3)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.22))) !important;
+  border-right: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: background-color 0.16s ease, box-shadow 0.16s ease !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -96px;
+  bottom: 0;
+  width: 72px;
+  pointer-events: none;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.12)), transparent);
+}
+
+html.harley-codex-skin aside,
+html.harley-codex-skin header,
+html.harley-codex-skin [role="navigation"]:not([aria-label]) {
+  background-color: color-mix(in srgb, var(--harley-accent-mist) 38%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  transition: var(--harley-transition-smooth) !important;
+}
+
+html.harley-codex-skin header {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html.harley-codex-skin header *,
+html.harley-codex-skin [class*="titlebar"],
+html.harley-codex-skin [class*="Titlebar"],
+html.harley-codex-skin [class*="topbar"],
+html.harley-codex-skin [class*="Topbar"] {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin [data-harley-top-strip="true"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-top-strip="true"]::before,
+html.harley-codex-skin [data-harley-top-strip="true"]::after {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin #root main::before,
+html.harley-codex-skin #root [role="main"]::before {
+  content: none !important;
+}
+
+html.harley-codex-skin nav[aria-label],
+html.harley-codex-skin [role="navigation"][aria-label] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin nav[aria-label="用户消息"] {
+  opacity: 0.16 !important;
+  transition: opacity 0.16s ease !important;
+}
+
+html.harley-codex-skin nav[aria-label="用户消息"]:hover {
+  opacity: 0.72 !important;
+}
+
+html.harley-codex-skin main,
+html.harley-codex-skin [role="main"] {
+  background: transparent !important;
+}
+
+html.harley-codex-skin textarea,
+html.harley-codex-skin input,
+html.harley-codex-skin [contenteditable="true"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: var(--harley-transition-smooth) !important;
+}
+
+html.harley-codex-skin textarea:focus,
+html.harley-codex-skin input:focus,
+html.harley-codex-skin [contenteditable="true"]:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--harley-accent-soft) !important;
+  border-radius: 8px !important;
+}
+
+html.harley-codex-skin [role="dialog"],
+html.harley-codex-skin [role="menu"],
+html.harley-codex-skin [role="listbox"] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--harley-accent-cool) 10%, rgba(255, 255, 255, 0.24)), color-mix(in srgb, var(--harley-accent-warm) 14%, rgba(255, 255, 255, 0.08))) !important;
+  border: 1px solid var(--harley-border) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12),
+              0 4px 16px rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2),
+              0 0 0 0.5px rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 12px !important;
+  transition: var(--harley-transition-spring) !important;
+}
+
+html.harley-codex-skin [role="dialog"]:hover,
+html.harley-codex-skin [role="menu"]:hover,
+html.harley-codex-skin [role="listbox"]:hover {
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.15),
+              0 6px 20px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.25),
+              0 0 0 0.5px rgba(255, 255, 255, 0.15) !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"] {
+  background: var(--harley-panel-soft) !important;
+  border: 1px solid var(--harley-border) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04),
+              0 2px 8px rgba(0, 0, 0, 0.02),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 12px !important;
+  transition: var(--harley-transition-smooth) !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"]:hover {
+  background: var(--harley-panel) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
+              0 4px 12px rgba(0, 0, 0, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"] > * {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] {
+  background: var(--harley-panel-strong) !important;
+  border: 1px solid var(--harley-border) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+              0 4px 16px rgba(0, 0, 0, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15),
+              0 0 0 0.5px rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 14px !important;
+  transition: var(--harley-transition-smooth) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"]:focus-within {
+  background: var(--harley-panel-strong) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12),
+              0 6px 24px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2),
+              0 0 0 1px var(--harley-accent-soft) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] *,
+html.harley-codex-skin [data-harley-composer="true"] textarea,
+html.harley-codex-skin [data-harley-composer="true"] input,
+html.harley-codex-skin [data-harley-composer="true"] [contenteditable="true"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep picture-heavy themes clean: avoid turning every Codex item into a framed tile. */
+html.harley-codex-skin [data-harley-sidebar="true"] button,
+html.harley-codex-skin [data-harley-sidebar="true"] [role="button"],
+html.harley-codex-skin [data-harley-sidebar="true"] a,
+html.harley-codex-skin [data-harley-sidebar="true"] [class*="bg-"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"] button:hover,
+html.harley-codex-skin [data-harley-sidebar="true"] [role="button"]:hover,
+html.harley-codex-skin [data-harley-sidebar="true"] a:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"] {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 14%, rgba(255, 255, 255, 0.18)), color-mix(in srgb, var(--harley-accent-warm) 12%, rgba(255, 255, 255, 0.08))) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"]:hover {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 18%, rgba(255, 255, 255, 0.24)), color-mix(in srgb, var(--harley-accent-warm) 15%, rgba(255, 255, 255, 0.12))) !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] {
+  background:
+    linear-gradient(140deg, color-mix(in srgb, var(--harley-accent-cool) 10%, rgba(255, 255, 255, 0.46)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.4))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 18%, rgba(255, 255, 255, 0.32)) !important;
+  box-shadow: 0 10px 34px color-mix(in srgb, var(--harley-accent) 18%, transparent) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  #harley-codex-skin-root .harley-codex-left-veil {
+    display: none;
+  }
+
+  html.harley-codex-skin aside,
+  html.harley-codex-skin header,
+  html.harley-codex-skin [role="navigation"]:not([aria-label]) {
+    background-color: rgba(8, 8, 8, 0.22) !important;
+    border-color: var(--harley-border) !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  html.harley-codex-skin [role="dialog"],
+  html.harley-codex-skin [role="menu"],
+  html.harley-codex-skin [role="listbox"] {
+    background:
+      linear-gradient(180deg, rgba(9, 24, 43, 0.48), rgba(8, 17, 31, 0.34)) !important;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3),
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 0 0 0.5px rgba(255, 255, 255, 0.05) !important;
+  }
+
+  html.harley-codex-skin [role="dialog"]:hover,
+  html.harley-codex-skin [role="menu"]:hover,
+  html.harley-codex-skin [role="listbox"]:hover {
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4),
+                0 6px 20px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                0 0 0 0.5px rgba(255, 255, 255, 0.08) !important;
+  }
+
+  html.harley-codex-skin [data-harley-sidebar="true"] {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.36), transparent 96%) !important;
+    box-shadow: 2px 0 24px rgba(0, 0, 0, 0.2),
+                inset -1px 0 0 rgba(255, 255, 255, 0.03) !important;
+  }
+
+}
+
+/* macOS 风格滚动条 */
+html.harley-codex-skin ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html.harley-codex-skin ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html.harley-codex-skin ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: var(--harley-transition-smooth);
+}
+
+html.harley-codex-skin ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+  background-clip: padding-box;
+}
+
+html[data-harley-appearance="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  background-clip: padding-box;
+}
+
+html[data-harley-appearance="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+  background-clip: padding-box;
+}
+
+/* 选中文本样式 */
+html.harley-codex-skin ::selection {
+  background: var(--harley-accent-soft);
+  color: inherit;
+}
+
+html.harley-codex-skin ::-moz-selection {
+  background: var(--harley-accent-soft);
+  color: inherit;
+}
+
+/* 列表项悬浮效果 */
+html.harley-codex-skin [role="option"]:hover,
+html.harley-codex-skin [role="menuitem"]:hover,
+html.harley-codex-skin li:hover {
+  background: color-mix(in srgb, var(--harley-accent) 12%, transparent) !important;
+  transition: var(--harley-transition-smooth) !important;
+}
+
+/* 禁用状态 */
+html.harley-codex-skin button:disabled,
+html.harley-codex-skin [role="button"][aria-disabled="true"] {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"],
+html.harley-codex-skin [data-harley-soft-card="true"]:hover {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 10%, rgba(255, 255, 255, 0.56)), color-mix(in srgb, var(--harley-accent-warm) 9%, rgba(255, 255, 255, 0.38))),
+    var(--harley-background) !important;
+  background-size: auto, 360% !important;
+  background-position: center, var(--harley-bg-x, 72%) var(--harley-bg-y, 45%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.36) !important;
+  box-shadow: 0 10px 32px color-mix(in srgb, var(--harley-accent-deep) 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.44) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"]:hover {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 13%, rgba(255, 255, 255, 0.62)), color-mix(in srgb, var(--harley-accent-warm) 11%, rgba(255, 255, 255, 0.44))),
+    var(--harley-background) !important;
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--harley-accent-deep) 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.52) !important;
+  transform: translateY(-1px) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.82)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.76))) !important;
+  border: 1px solid color-mix(in srgb, var(--harley-accent) 20%, rgba(255, 255, 255, 0.2)) !important;
+  box-shadow: 0 16px 42px color-mix(in srgb, var(--harley-accent-deep) 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.52) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 18px !important;
+  overflow: visible !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"]:focus-within {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 9%, rgba(255, 255, 255, 0.86)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.8))) !important;
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--harley-accent-deep) 13%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.58) !important;
+}
+
+/* Readability and stability pass. */
+html.harley-codex-skin,
+html.harley-codex-skin body,
+html.harley-codex-skin #root {
+  color: rgba(16, 28, 36, 0.94) !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"] {
+  color: rgba(18, 34, 43, 0.9) !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar-active="true"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 22%, rgba(255, 255, 255, 0.58)), color-mix(in srgb, var(--harley-accent-warm) 18%, rgba(255, 255, 255, 0.52))) !important;
+  border-radius: 8px !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--harley-accent) 32%, transparent), 0 3px 12px color-mix(in srgb, var(--harley-accent) 16%, transparent) !important;
+  color: rgba(8, 28, 38, 0.96) !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"] button:hover,
+html.harley-codex-skin [data-harley-sidebar="true"] [role="button"]:hover,
+html.harley-codex-skin [data-harley-sidebar="true"] a:hover {
+  background: color-mix(in srgb, var(--harley-accent) 14%, rgba(255, 255, 255, 0.28)) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"],
+html.harley-codex-skin [data-harley-composer="true"]:focus-within {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.84)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.78))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 20%, rgba(255, 255, 255, 0.2)) !important;
+  box-shadow: 0 16px 42px color-mix(in srgb, var(--harley-accent-deep) 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.54) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] [class*="text-red"],
+html.harley-codex-skin [data-harley-composer="true"] [style*="red"] {
+  color: #d64040 !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] [class*="text-token-text-tertiary"],
+html.harley-codex-skin [data-harley-composer="true"] [class*="text-token-text-secondary"],
+html.harley-codex-skin [data-harley-composer="true"] [class*="ModelPicker"],
+html.harley-codex-skin [data-harley-composer="true"] [class*="dropdownLabel"] {
+  color: rgba(18, 34, 44, 0.78) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] button {
+  background: rgba(255, 255, 255, 0.58) !important;
+  border: 1px solid color-mix(in srgb, var(--harley-accent) 22%, rgba(255, 255, 255, 0.16)) !important;
+  color: rgba(16, 28, 36, 0.86) !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--harley-accent) 12%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] button:hover {
+  background: rgba(255, 255, 255, 0.78) !important;
+  color: rgba(8, 22, 30, 0.96) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="停止"],
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="发送"],
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Send"],
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Stop"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-warm) 66%, var(--harley-accent-deep)), color-mix(in srgb, var(--harley-accent-deep) 76%, #18202A)) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--harley-accent) 32%, transparent) !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] button svg,
+html.harley-codex-skin [data-harley-composer="true"] button svg * {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="停止"] svg,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="停止"] svg *,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="发送"] svg,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="发送"] svg *,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Send"] svg,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Send"] svg *,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Stop"] svg,
+html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Stop"] svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+html.harley-codex-skin [class*="bg-token-input-validation-error"],
+html.harley-codex-skin [class*="input-validation-error"] {
+  background: rgba(255, 238, 234, 0.74) !important;
+  border: 1px solid rgba(255, 132, 118, 0.18) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 22px rgba(160, 72, 64, 0.08) !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 12px !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin textarea,
+html.harley-codex-skin input,
+html.harley-codex-skin [contenteditable="true"] {
+  transition: none !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-sidebar="true"] {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-cool) 28%, rgba(255, 255, 255, 0.74)), color-mix(in srgb, var(--harley-accent-warm) 24%, rgba(255, 255, 255, 0.66))),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08)) !important;
+  border-right: 1px solid color-mix(in srgb, var(--harley-accent-deep) 16%, rgba(255, 255, 255, 0.46)) !important;
+  box-shadow:
+    24px 0 64px color-mix(in srgb, var(--harley-accent-deep) 18%, transparent),
+    8px 0 22px rgba(0, 0, 0, 0.06),
+    inset -1px 0 0 rgba(255, 255, 255, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-sidebar="true"]::after {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--harley-accent-warm) 22%, rgba(255, 255, 255, 0.24)), transparent 72%) !important;
+}
+
+html[data-harley-effects="lite"] [role="dialog"],
+html[data-harley-effects="lite"] [role="menu"],
+html[data-harley-effects="lite"] [role="listbox"] {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 13%, rgba(255, 255, 255, 0.96)), color-mix(in srgb, var(--harley-accent-warm) 12%, rgba(255, 255, 255, 0.9))),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.88)) !important;
+  border: 1px solid color-mix(in srgb, var(--harley-accent-deep) 14%, rgba(255, 255, 255, 0.58)) !important;
+  box-shadow:
+    0 26px 64px color-mix(in srgb, var(--harley-accent-deep) 24%, transparent),
+    0 8px 22px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 color-mix(in srgb, var(--harley-accent-deep) 10%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-soft-card="true"] {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.9)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.82))),
+    var(--harley-background) !important;
+  border-color: rgba(255, 255, 255, 0.48) !important;
+  box-shadow:
+    0 10px 28px color-mix(in srgb, var(--harley-accent-deep) 12%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-composer="true"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.97)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.93))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent-deep) 12%, rgba(255, 255, 255, 0.5)) !important;
+  box-shadow:
+    0 20px 52px color-mix(in srgb, var(--harley-accent-deep) 16%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.74),
+    inset 0 -1px 0 color-mix(in srgb, var(--harley-accent-deep) 8%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-composer="true"] form,
+html[data-harley-effects="lite"] [data-harley-composer="true"] [class*="composer"],
+html[data-harley-effects="lite"] [data-harley-composer="true"] [class*="Composer"],
+html[data-harley-effects="lite"] [data-harley-composer="true"] [class*="surface"],
+html[data-harley-effects="lite"] [data-harley-composer="true"] [class*="Surface"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-composer="true"] textarea,
+html[data-harley-effects="lite"] [data-harley-composer="true"] input,
+html[data-harley-effects="lite"] [data-harley-composer="true"] [contenteditable="true"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-effects="balanced"] [data-harley-composer="true"],
+html[data-harley-effects="balanced"] [data-harley-soft-card="true"],
+html[data-harley-effects="balanced"] [role="dialog"],
+html[data-harley-effects="balanced"] [role="menu"],
+html[data-harley-effects="balanced"] [role="listbox"] {
+  backdrop-filter: blur(10px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.08) !important;
+}
+
+html[data-harley-effects="rich"] header,
+html[data-harley-effects="rich"] [data-harley-top-strip="true"],
+html[data-harley-effects="rich"] [class*="titlebar"],
+html[data-harley-effects="rich"] [class*="Titlebar"],
+html[data-harley-effects="rich"] [class*="topbar"],
+html[data-harley-effects="rich"] [class*="Topbar"],
+html[data-harley-effects="rich"] [data-harley-sidebar="true"],
+html[data-harley-effects="rich"] [data-harley-composer="true"],
+html[data-harley-effects="rich"] [data-harley-soft-card="true"],
+html[data-harley-effects="rich"] [role="dialog"],
+html[data-harley-effects="rich"] [role="menu"],
+html[data-harley-effects="rich"] [role="listbox"] {
+  backdrop-filter: blur(24px) saturate(1.18) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.18) !important;
+}
+
+html[data-harley-effects="rich"] header,
+html[data-harley-effects="rich"] [data-harley-top-strip="true"],
+html[data-harley-effects="rich"] [class*="titlebar"],
+html[data-harley-effects="rich"] [class*="Titlebar"],
+html[data-harley-effects="rich"] [class*="topbar"],
+html[data-harley-effects="rich"] [class*="Topbar"] {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-deep) 22%, rgba(18, 18, 20, 0.42)), color-mix(in srgb, var(--harley-accent-warm) 10%, rgba(28, 24, 24, 0.34))),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)) !important;
+  color: rgba(246, 244, 240, 0.9) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(30px) saturate(1.22) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(1.22) !important;
+}
+
+html[data-harley-effects="rich"] [data-harley-top-strip="true"] *,
+html[data-harley-effects="rich"] header * {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.24) !important;
+}
+
+/* Final material pass: keep lite mode readable instead of glass-thin. */
+html.harley-codex-skin [data-harley-sidebar="true"],
+html.harley-codex-skin [data-harley-sidebar="true"] * {
+  color: rgba(24, 30, 36, 0.9) !important;
+  text-shadow: none !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"] svg,
+html.harley-codex-skin [data-harley-sidebar="true"] svg * {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-sidebar="true"] {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-cool) 18%, rgba(250, 250, 250, 0.88)), color-mix(in srgb, var(--harley-accent-warm) 16%, rgba(246, 244, 242, 0.82))),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.14)) !important;
+  border-right: 1px solid color-mix(in srgb, var(--harley-accent-deep) 12%, rgba(255, 255, 255, 0.7)) !important;
+  box-shadow:
+    22px 0 54px color-mix(in srgb, var(--harley-accent-deep) 16%, transparent),
+    8px 0 18px rgba(0, 0, 0, 0.055),
+    inset -1px 0 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-sidebar="true"]::after {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--harley-accent-warm) 12%, rgba(255, 255, 255, 0.18)), transparent 78%) !important;
+}
+
+html[data-harley-effects="lite"] [data-harley-sidebar-active="true"],
+html[data-harley-effects="lite"] [data-harley-sidebar="true"] button:hover,
+html[data-harley-effects="lite"] [data-harley-sidebar="true"] [role="button"]:hover,
+html[data-harley-effects="lite"] [data-harley-sidebar="true"] a:hover {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 18%, rgba(255, 255, 255, 0.68)), color-mix(in srgb, var(--harley-accent-warm) 14%, rgba(255, 255, 255, 0.58))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent-deep) 10%, rgba(255, 255, 255, 0.5)) !important;
+  box-shadow:
+    0 8px 20px color-mix(in srgb, var(--harley-accent-deep) 10%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62) !important;
+}
+
+html[data-harley-effects="lite"] [role="dialog"],
+html[data-harley-effects="lite"] [role="menu"],
+html[data-harley-effects="lite"] [role="listbox"] {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 9%, rgba(255, 255, 255, 0.98)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(250, 248, 247, 0.94))) !important;
+  color: rgba(24, 30, 36, 0.92) !important;
+  border: 1px solid color-mix(in srgb, var(--harley-accent-deep) 12%, rgba(255, 255, 255, 0.66)) !important;
+  box-shadow:
+    0 24px 60px color-mix(in srgb, var(--harley-accent-deep) 20%, transparent),
+    0 8px 18px rgba(0, 0, 0, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.76) !important;
+}
+
+html[data-harley-effects="lite"] [role="dialog"] *,
+html[data-harley-effects="lite"] [role="menu"] *,
+html[data-harley-effects="lite"] [role="listbox"] * {
+  color: inherit !important;
+  text-shadow: none !important;
+}
+
+/* Real dark adaptation: dim the art first, then put darker static materials on top. */
+html[data-harley-appearance="dark"] #harley-codex-skin-root .harley-codex-workspace-veil {
+  background:
+    radial-gradient(ellipse 72% 86% at 58% 45%, rgba(8, 10, 13, 0.28), rgba(8, 10, 13, 0.48) 52%, rgba(8, 10, 13, 0.66) 100%),
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-deep) 18%, rgba(0, 0, 0, 0.42)), rgba(0, 0, 0, 0.32) 44%, rgba(0, 0, 0, 0.56)) !important;
+}
+
+html[data-harley-appearance="dark"] #harley-codex-skin-root .harley-codex-top-veil {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.18) 58%, transparent 100%) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-sidebar="true"],
+html[data-harley-appearance="dark"][data-harley-effects="lite"] [data-harley-sidebar="true"] {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-deep) 22%, rgba(18, 18, 20, 0.82)), color-mix(in srgb, var(--harley-accent-warm) 10%, rgba(28, 24, 24, 0.72))),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow:
+    22px 0 58px rgba(0, 0, 0, 0.28),
+    inset -1px 0 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-sidebar="true"],
+html[data-harley-appearance="dark"] [data-harley-sidebar="true"] * {
+  color: rgba(246, 244, 240, 0.88) !important;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.24) !important;
+}
+
+html[data-harley-appearance="dark"] [role="dialog"],
+html[data-harley-appearance="dark"] [role="menu"],
+html[data-harley-appearance="dark"] [role="listbox"],
+html[data-harley-appearance="dark"][data-harley-effects="lite"] [role="dialog"],
+html[data-harley-appearance="dark"][data-harley-effects="lite"] [role="menu"],
+html[data-harley-appearance="dark"][data-harley-effects="lite"] [role="listbox"] {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-deep) 18%, rgba(28, 26, 28, 0.94)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(18, 17, 19, 0.9))) !important;
+  color: rgba(250, 248, 244, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.42),
+    0 8px 22px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-harley-appearance="dark"] [role="dialog"] *,
+html[data-harley-appearance="dark"] [role="menu"] *,
+html[data-harley-appearance="dark"] [role="listbox"] * {
+  color: inherit !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"],
+html[data-harley-appearance="dark"][data-harley-effects="lite"] [data-harley-composer="true"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-deep) 14%, rgba(32, 31, 33, 0.94)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(24, 23, 25, 0.9))) !important;
+  color: rgba(250, 248, 244, 0.94) !important;
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html.harley-codex-skin #harley-codex-skin-root .harley-codex-workspace-veil {
+    background:
+      radial-gradient(ellipse 72% 86% at 58% 45%, rgba(8, 10, 13, 0.28), rgba(8, 10, 13, 0.48) 52%, rgba(8, 10, 13, 0.66) 100%),
+      linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-deep) 18%, rgba(0, 0, 0, 0.42)), rgba(0, 0, 0, 0.32) 44%, rgba(0, 0, 0, 0.56)) !important;
+  }
+
+  html.harley-codex-skin #harley-codex-skin-root .harley-codex-top-veil {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.18) 58%, transparent 100%) !important;
+  }
+
+  html.harley-codex-skin [data-harley-sidebar="true"] {
+    background:
+      linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-deep) 22%, rgba(18, 18, 20, 0.82)), color-mix(in srgb, var(--harley-accent-warm) 10%, rgba(28, 24, 24, 0.72))),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow:
+      22px 0 58px rgba(0, 0, 0, 0.28),
+      inset -1px 0 0 rgba(255, 255, 255, 0.06) !important;
+  }
+
+  html.harley-codex-skin [data-harley-sidebar="true"],
+  html.harley-codex-skin [data-harley-sidebar="true"] * {
+    color: rgba(246, 244, 240, 0.88) !important;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.24) !important;
+  }
+
+  html.harley-codex-skin [role="dialog"],
+  html.harley-codex-skin [role="menu"],
+  html.harley-codex-skin [role="listbox"],
+  html.harley-codex-skin [data-harley-composer="true"] {
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-deep) 18%, rgba(28, 26, 28, 0.94)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(18, 17, 19, 0.9))) !important;
+    color: rgba(250, 248, 244, 0.92) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow:
+      0 26px 70px rgba(0, 0, 0, 0.42),
+      0 8px 22px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  }
+}
+
+/* Dark composer interior: Codex has nested editor panes that can stay light. */
+html[data-harley-appearance="dark"] [data-harley-composer="true"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"]:focus-within {
+  background:
+    linear-gradient(135deg, rgba(34, 31, 33, 0.9), rgba(24, 22, 24, 0.86)) !important;
+  color: rgba(250, 248, 244, 0.94) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.42),
+    0 8px 22px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] form,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="composer"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="Composer"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="surface"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="Surface"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="bg-token"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="bg-"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] textarea,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] input,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [contenteditable="true"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [role="textbox"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgba(250, 248, 244, 0.94) !important;
+  caret-color: color-mix(in srgb, var(--harley-accent-warm) 72%, #ffffff) !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] textarea::placeholder,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] input::placeholder {
+  color: rgba(250, 248, 244, 0.46) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(250, 248, 244, 0.9) !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] img,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] canvas,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] video {
+  background: transparent !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html.harley-codex-skin [data-harley-composer="true"],
+  html.harley-codex-skin [data-harley-composer="true"]:focus-within {
+    background:
+      linear-gradient(135deg, rgba(34, 31, 33, 0.9), rgba(24, 22, 24, 0.86)) !important;
+    color: rgba(250, 248, 244, 0.94) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    box-shadow:
+      0 24px 62px rgba(0, 0, 0, 0.42),
+      0 8px 22px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] form,
+  html.harley-codex-skin [data-harley-composer="true"] [class*="composer"],
+  html.harley-codex-skin [data-harley-composer="true"] [class*="Composer"],
+  html.harley-codex-skin [data-harley-composer="true"] [class*="surface"],
+  html.harley-codex-skin [data-harley-composer="true"] [class*="Surface"],
+  html.harley-codex-skin [data-harley-composer="true"] [class*="bg-token"],
+  html.harley-codex-skin [data-harley-composer="true"] [class*="bg-"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] textarea,
+  html.harley-codex-skin [data-harley-composer="true"] input,
+  html.harley-codex-skin [data-harley-composer="true"] [contenteditable="true"],
+  html.harley-codex-skin [data-harley-composer="true"] [role="textbox"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: rgba(250, 248, 244, 0.94) !important;
+    caret-color: color-mix(in srgb, var(--harley-accent-warm) 72%, #ffffff) !important;
+    box-shadow: none !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] textarea::placeholder,
+  html.harley-codex-skin [data-harley-composer="true"] input::placeholder {
+    color: rgba(250, 248, 244, 0.46) !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] button {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: rgba(250, 248, 244, 0.9) !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Dark composer controls must stay legible after Codex updates nested buttons/icons. */
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(button, [role="button"], [aria-haspopup], [aria-label], [class*="Model"], [class*="model"], [class*="Picker"], [class*="picker"], [class*="dropdown"], [class*="Dropdown"]) {
+  color: rgba(250, 248, 244, 0.9) !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(button, [role="button"]) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(button, [role="button"]):hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(svg, svg *, path, circle, line, polyline, rect) {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="发送"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="Send"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="停止"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="Stop"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-warm) 46%, rgba(255, 255, 255, 0.18)), color-mix(in srgb, var(--harley-accent-deep) 72%, rgba(0, 0, 0, 0.24))) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow:
+    0 8px 20px color-mix(in srgb, var(--harley-accent-deep) 34%, rgba(0, 0, 0, 0.18)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="发送"] *,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="Send"] *,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="停止"] *,
+html[data-harley-appearance="dark"] [data-harley-composer="true"] button[aria-label*="Stop"] * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="text-token-text-tertiary"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="text-token-text-secondary"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="placeholder"],
+html[data-harley-appearance="dark"] [data-harley-composer="true"] [class*="Placeholder"] {
+  color: rgba(250, 248, 244, 0.56) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html.harley-codex-skin [data-harley-composer="true"] :is(button, [role="button"], [aria-haspopup], [aria-label], [class*="Model"], [class*="model"], [class*="Picker"], [class*="picker"], [class*="dropdown"], [class*="Dropdown"]) {
+    color: rgba(250, 248, 244, 0.9) !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] :is(button, [role="button"]) {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] :is(svg, svg *, path, circle, line, polyline, rect) {
+    color: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="发送"],
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Send"],
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="停止"],
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Stop"] {
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-warm) 46%, rgba(255, 255, 255, 0.18)), color-mix(in srgb, var(--harley-accent-deep) 72%, rgba(0, 0, 0, 0.24))) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow:
+      0 8px 20px color-mix(in srgb, var(--harley-accent-deep) 34%, rgba(0, 0, 0, 0.18)),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="发送"] *,
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Send"] *,
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="停止"] *,
+  html.harley-codex-skin [data-harley-composer="true"] button[aria-label*="Stop"] * {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    fill: #ffffff !important;
+  }
+}
+
+/* Dark composer polish: separate the project chip and replace white focus rings. */
+html[data-harley-appearance="dark"] [data-harley-composer="true"] {
+  gap: 10px !important;
+  padding: 12px 14px 10px !important;
+  outline: none !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"]:focus-within {
+  outline: none !important;
+  border-color: color-mix(in srgb, var(--harley-accent-warm) 26%, rgba(255, 255, 255, 0.08)) !important;
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.42),
+    0 8px 22px rgba(0, 0, 0, 0.2),
+    0 0 0 1px color-mix(in srgb, var(--harley-accent-deep) 34%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] > * {
+  min-width: 0 !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(button, [role="button"]):has(svg):not([aria-label*="发送"]):not([aria-label*="Send"]):not([aria-label*="停止"]):not([aria-label*="Stop"]) {
+  flex-shrink: 0 !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(button, [role="button"]):not([aria-label]):not(:empty) {
+  margin-bottom: 2px !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(textarea, input, [contenteditable="true"], [role="textbox"], .ProseMirror) {
+  min-height: 38px !important;
+  padding-top: 2px !important;
+  outline: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(*:focus, *:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"] :is(button, [role="button"]):focus-visible {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--harley-accent-warm) 44%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html.harley-codex-skin [data-harley-composer="true"] {
+    gap: 10px !important;
+    padding: 12px 14px 10px !important;
+    outline: none !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"]:focus-within {
+    outline: none !important;
+    border-color: color-mix(in srgb, var(--harley-accent-warm) 26%, rgba(255, 255, 255, 0.08)) !important;
+    box-shadow:
+      0 24px 62px rgba(0, 0, 0, 0.42),
+      0 8px 22px rgba(0, 0, 0, 0.2),
+      0 0 0 1px color-mix(in srgb, var(--harley-accent-deep) 34%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] > * {
+    min-width: 0 !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] :is(button, [role="button"]):not([aria-label]):not(:empty) {
+    margin-bottom: 2px !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] :is(textarea, input, [contenteditable="true"], [role="textbox"], .ProseMirror) {
+    min-height: 38px !important;
+    padding-top: 2px !important;
+    outline: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] :is(*:focus, *:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  html.harley-codex-skin [data-harley-composer="true"] :is(button, [role="button"]):focus-visible {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--harley-accent-warm) 44%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* Rich glass final pass: thin, consistent chrome so blur remains visible. */
+html[data-harley-effects="rich"] #harley-codex-skin-root .harley-codex-workspace-veil {
+  background:
+    radial-gradient(ellipse 72% 84% at 58% 45%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05) 48%, rgba(0, 0, 0, 0.12) 100%),
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-cool) 8%, transparent), transparent 46%, color-mix(in srgb, var(--harley-accent-warm) 6%, transparent)) !important;
+}
+
+html[data-harley-effects="rich"] #harley-codex-skin-root .harley-codex-top-veil {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.04) 62%, transparent 100%) !important;
+}
+
+html[data-harley-effects="rich"] :is(
+  [data-harley-sidebar="true"],
+  header,
+  [data-harley-top-strip="true"],
+  [class*="titlebar"],
+  [class*="Titlebar"],
+  [class*="topbar"],
+  [class*="Topbar"]
+) {
+  background:
+    linear-gradient(155deg, rgba(34, 30, 31, 0.34), rgba(32, 27, 28, 0.18)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(34px) saturate(1.28) brightness(1.04) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(1.28) brightness(1.04) !important;
+}
+
+html[data-harley-effects="rich"] [data-harley-sidebar="true"] {
+  border-right: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+html[data-harley-effects="rich"] :is(header, [data-harley-top-strip="true"], [class*="titlebar"], [class*="Titlebar"], [class*="topbar"], [class*="Topbar"]) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+html[data-harley-effects="rich"] [data-harley-sidebar="true"]::after {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055), transparent 78%) !important;
+}
+
+html[data-harley-effects="rich"] :is(
+  [data-harley-sidebar="true"],
+  header,
+  [data-harley-top-strip="true"]
+) :is(button, [role="button"], a, [class*="bg-"]) {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-effects="rich"] [data-harley-sidebar-active="true"],
+html[data-harley-effects="rich"] [data-harley-sidebar="true"] :is(button, [role="button"], a):hover {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07)) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Top chrome and reading contrast pass. */
+html[data-harley-effects="rich"] :is(
+  header,
+  [data-harley-top-strip="true"],
+  [class*="titlebar"],
+  [class*="Titlebar"],
+  [class*="topbar"],
+  [class*="Topbar"]
+) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055)),
+    linear-gradient(90deg, rgba(36, 31, 32, 0.12), rgba(36, 31, 32, 0.045)) !important;
+  border-color: rgba(255, 255, 255, 0.055) !important;
+  box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(26px) saturate(1.2) brightness(1.03) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(1.2) brightness(1.03) !important;
+}
+
+html[data-harley-effects="rich"] :is(header, [data-harley-top-strip="true"]) * {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.52),
+    0 0 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+html[data-harley-effects="rich"] :is(header, [data-harley-top-strip="true"])::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -18px !important;
+  height: 18px !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.055), transparent) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-effects="rich"] #root :is(main, [role="main"]) :is(p, li, h1, h2, h3, h4, blockquote, [class*="markdown"], [class*="prose"], [class*="text-token-text-primary"], [class*="text-token-text-secondary"]) {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.72),
+    0 0 16px rgba(0, 0, 0, 0.42) !important;
+}
+
+html[data-harley-effects="rich"] #root :is(main, [role="main"]) :is(code, pre, [class*="code"]) {
+  text-shadow: none !important;
+}
+
+/* Conversation header should recede like the native menu bar, not read as a card. */
+html[data-harley-effects="rich"] #root :is(
+  header,
+  [data-harley-top-strip="true"]
+) {
+  background:
+    linear-gradient(180deg, rgba(30, 27, 28, 0.24), rgba(30, 27, 28, 0.105)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)) !important;
+  border-color: transparent !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.025) !important;
+  backdrop-filter: blur(22px) saturate(1.12) brightness(0.98) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.12) brightness(0.98) !important;
+}
+
+html[data-harley-effects="rich"] #root :is(
+  header,
+  [data-harley-top-strip="true"]
+)::after {
+  bottom: -14px !important;
+  height: 14px !important;
+  background:
+    linear-gradient(180deg, rgba(30, 27, 28, 0.055), transparent) !important;
+}
+
+html[data-harley-effects="rich"] #root :is(
+  header,
+  [data-harley-top-strip="true"]
+) * {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Match the conversation header to the actual left sidebar material. */
+html[data-harley-effects="rich"] #root :is(header, [data-harley-top-strip="true"]) {
+  background: none !important;
+  background-color: rgba(8, 8, 8, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-harley-effects="rich"] #root :is(header, [data-harley-top-strip="true"])::after {
+  content: none !important;
+}
+
+/* Performance pass: keep the settled chrome cheap to composite. */
+html.harley-codex-skin #harley-codex-skin-root {
+  contain: strict !important;
+}
+
+html.harley-codex-skin #harley-codex-skin-root .harley-codex-backdrop {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+html[data-harley-effects="rich"] #root :is(aside, header, [data-harley-sidebar="true"], [data-harley-top-strip="true"]) {
+  background-image: none !important;
+  background-color: rgba(8, 8, 8, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Conversation composer dock is layout-only; remove its hard bottom plate. */
+html.harley-codex-skin [data-harley-composer-dock="true"] {
+  padding-bottom: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-composer-stuck="true"] {
+  margin-bottom: 0 !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-composer-dock="true"][data-harley-composer-stuck="true"] {
+  margin-bottom: 0 !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-composer-dock="true"] [data-harley-composer-stuck="true"] {
+  margin-bottom: 0 !important;
+  transform: none !important;
+}
+
+html.harley-codex-skin [data-harley-composer-dock="true"] > :not([data-harley-composer="true"]),
+html.harley-codex-skin [data-harley-composer-dock="true"] > :not([data-harley-composer="true"]) > :not([data-harley-composer="true"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin [data-harley-bottom-fade="true"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) [data-harley-composer="true"][data-harley-composer-stuck="true"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.84)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.78))) !important;
+  color: rgba(16, 28, 36, 0.94) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 20%, rgba(255, 255, 255, 0.2)) !important;
+  box-shadow:
+    0 16px 42px color-mix(in srgb, var(--harley-accent-deep) 10%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54) !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) [data-harley-composer="true"][data-harley-composer-stuck="true"]:focus-within {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-cool) 9%, rgba(255, 255, 255, 0.86)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.8))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 22%, rgba(255, 255, 255, 0.24)) !important;
+  box-shadow:
+    0 18px 46px color-mix(in srgb, var(--harley-accent-deep) 13%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.58) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"][data-harley-composer-stuck="true"] {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-deep) 14%, rgba(32, 31, 33, 0.94)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(24, 23, 25, 0.9))) !important;
+  color: rgba(250, 248, 244, 0.94) !important;
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-composer="true"][data-harley-composer-stuck="true"]:focus-within {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--harley-accent-deep) 14%, rgba(32, 31, 33, 0.94)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(24, 23, 25, 0.9))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent-warm) 26%, rgba(255, 255, 255, 0.08)) !important;
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.42),
+    0 8px 22px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Settings screens use a separate large surface; tint it explicitly. */
+html.harley-codex-skin [data-harley-settings-panel="true"] {
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-cool) 8%, rgba(255, 255, 255, 0.12)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(255, 255, 255, 0.06))) !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-settings-panel="true"] :is(section, article, form, [class*="rounded"], [class*="border"]):not(button):not(input):not(textarea):not(select):not([role="switch"]) {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.34)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.22))) !important;
+  border-color: color-mix(in srgb, var(--harley-border) 72%, rgba(255, 255, 255, 0.18)) !important;
+  box-shadow:
+    0 10px 32px rgba(40, 48, 56, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+  backdrop-filter: blur(16px) saturate(1.14) brightness(1.01) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.14) brightness(1.01) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-settings-panel="true"] {
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-deep) 10%, rgba(8, 8, 8, 0.14)), rgba(8, 8, 8, 0.08)) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-settings-panel="true"] :is(section, article, form, [class*="rounded"], [class*="border"]):not(button):not(input):not(textarea):not(select):not([role="switch"]) {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-deep) 12%, rgba(28, 25, 24, 0.48)), rgba(18, 16, 15, 0.36)) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+html.harley-codex-skin [data-harley-settings-panel="true"] :is(button, [role="button"], [aria-haspopup], select, input:not([type="checkbox"]), [class*="select"], [class*="Select"], [class*="dropdown"], [class*="Dropdown"]) {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.7)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.56))) !important;
+  color: rgba(20, 30, 36, 0.92) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 18%, rgba(255, 255, 255, 0.34)) !important;
+  box-shadow:
+    0 5px 16px rgba(40, 48, 56, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+html.harley-codex-skin [data-harley-settings-panel="true"] :is(button, [role="button"], [aria-haspopup]):hover {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 12%, rgba(255, 255, 255, 0.76)), color-mix(in srgb, var(--harley-accent-warm) 10%, rgba(255, 255, 255, 0.62))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 26%, rgba(255, 255, 255, 0.36)) !important;
+}
+
+html.harley-codex-skin [data-harley-settings-panel="true"] :is([role="switch"], [aria-checked="true"], [aria-checked="false"], button[class*="switch"], button[class*="Switch"]) {
+  background-color: color-mix(in srgb, var(--harley-accent) 30%, rgba(255, 255, 255, 0.48)) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 28%, rgba(255, 255, 255, 0.34)) !important;
+}
+
+html.harley-codex-skin [data-harley-settings-panel="true"] :is([class*="badge"], [class*="Badge"], [class*="tag"], [class*="Tag"], [class*="pill"], [class*="Pill"]) {
+  background-color: color-mix(in srgb, var(--harley-accent-cool) 12%, rgba(255, 255, 255, 0.52)) !important;
+  color: rgba(20, 30, 36, 0.9) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 18%, rgba(255, 255, 255, 0.3)) !important;
+}
+
+html.harley-codex-skin [data-harley-settings-panel="true"] :is(svg, svg *, path, circle, line, polyline, rect) {
+  stroke: currentColor !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-settings-panel="true"] :is(button, [role="button"], [aria-haspopup], select, input:not([type="checkbox"]), [class*="select"], [class*="Select"], [class*="dropdown"], [class*="Dropdown"]) {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.07)) !important;
+  color: rgba(250, 248, 244, 0.92) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-harley-appearance="dark"] [data-harley-settings-panel="true"] :is([class*="badge"], [class*="Badge"], [class*="tag"], [class*="Tag"], [class*="pill"], [class*="Pill"]) {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(250, 248, 244, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Code blocks need a steadier reading surface than prose. */
+html.harley-codex-skin #root :is(pre, [class*="codeBlock"], [class*="CodeBlock"]) {
+  background:
+    linear-gradient(145deg, rgba(24, 26, 28, 0.88), color-mix(in srgb, var(--harley-accent-deep) 10%, rgba(16, 17, 19, 0.84))) !important;
+  color: rgba(248, 246, 240, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px) saturate(1.05) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.05) !important;
+}
+
+html.harley-codex-skin #root pre {
+  padding: 14px 16px !important;
+  overflow: auto !important;
+}
+
+html.harley-codex-skin #root pre,
+html.harley-codex-skin #root pre code,
+html.harley-codex-skin #root pre span {
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace !important;
+  font-size: 13px !important;
+  line-height: 1.62 !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.42) !important;
+}
+
+html.harley-codex-skin #root pre code {
+  background: transparent !important;
+  color: inherit;
+}
+
+html.harley-codex-skin #root :is(p, li, td, blockquote) > code {
+  background: rgba(18, 20, 22, 0.72) !important;
+  color: rgba(255, 246, 230, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 6px !important;
+  padding: 0.12em 0.38em !important;
+  text-shadow: none !important;
+}
+
+html.harley-codex-skin #root pre :is(.token.comment, .hljs-comment, [class*="comment"]) {
+  color: rgba(195, 202, 205, 0.78) !important;
+}
+
+html.harley-codex-skin #root pre :is(.token.keyword, .hljs-keyword, [class*="keyword"]) {
+  color: #b9d7ff !important;
+}
+
+html.harley-codex-skin #root pre :is(.token.string, .hljs-string, [class*="string"]) {
+  color: #d9e8b4 !important;
+}
+
+html.harley-codex-skin #root pre :is(.token.number, .token.boolean, .hljs-number, .hljs-literal, [class*="number"], [class*="boolean"]) {
+  color: #f2c98f !important;
+}
+
+/* Light theme code readability pass: keep code clear without creating a dark block. */
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root :is(pre, [class*="codeBlock"], [class*="CodeBlock"]) {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 8%, rgba(255, 255, 255, 0.76)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.66))) !important;
+  color: rgba(24, 30, 34, 0.96) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 18%, rgba(255, 255, 255, 0.42)) !important;
+  box-shadow:
+    0 10px 30px rgba(40, 48, 56, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(12px) saturate(1.08) brightness(1.03) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.08) brightness(1.03) !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre,
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre code,
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre code span {
+  color: rgba(24, 30, 34, 0.96) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre :is(button, [role="button"], svg, path) {
+  color: rgba(24, 30, 34, 0.72) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre :is(.token.comment, .hljs-comment, [class*="comment"]) {
+  color: rgba(78, 91, 98, 0.78) !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre :is(.token.keyword, .hljs-keyword, [class*="keyword"]) {
+  color: #255f9f !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre :is(.token.string, .hljs-string, [class*="string"]) {
+  color: #35723d !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root pre :is(.token.number, .token.boolean, .hljs-number, .hljs-literal, [class*="number"], [class*="boolean"]) {
+  color: #9a5b12 !important;
+}
+
+html.harley-codex-skin:not([data-harley-appearance="dark"]) #root :is(p, li, td, blockquote) > code {
+  background: color-mix(in srgb, var(--harley-accent-cool) 10%, rgba(255, 255, 255, 0.58)) !important;
+  color: rgba(24, 30, 34, 0.96) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 20%, rgba(255, 255, 255, 0.34)) !important;
+}
+
+/* Settings mode final fallback: remove late white flashes across every settings tab. */
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"], [class*="main-surface"], [class*="MainSurface"]) {
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-cool) 8%, rgba(255, 255, 255, 0.12)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(255, 255, 255, 0.06))) !important;
+  background-color: transparent !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"]) :is(
+  [class*="bg-white"],
+  [class*="bg-token-main-surface-primary"],
+  [class*="bg-token-bg-primary"],
+  [class*="bg-token-sidebar-surface-primary"],
+  [class*="surface"],
+  [class*="Surface"]
+):not([data-harley-sidebar="true"]):not([data-harley-composer="true"]):not(button):not(input):not(textarea):not(select) {
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-cool) 8%, rgba(255, 255, 255, 0.12)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(255, 255, 255, 0.06))) !important;
+  background-color: transparent !important;
+  border-color: color-mix(in srgb, var(--harley-border) 48%, transparent) !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"]) :is(section, article, form, [class*="rounded"], [class*="border"]):not([data-harley-sidebar="true"]):not([data-harley-composer="true"]):not(button):not(input):not(textarea):not(select):not([role="switch"]) {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.34)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.22))) !important;
+  border-color: color-mix(in srgb, var(--harley-border) 72%, rgba(255, 255, 255, 0.18)) !important;
+  box-shadow:
+    0 10px 32px rgba(40, 48, 56, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+}
+
+html[data-harley-appearance="dark"][data-harley-settings-mode="true"] #root :is(
+  main,
+  [role="main"],
+  [class*="bg-white"],
+  [class*="bg-token-main-surface-primary"],
+  [class*="bg-token-bg-primary"],
+  [class*="surface"],
+  [class*="Surface"]
+):not([data-harley-sidebar="true"]):not([data-harley-composer="true"]):not(button):not(input):not(textarea):not(select) {
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--harley-accent-deep) 10%, rgba(8, 8, 8, 0.14)), rgba(8, 8, 8, 0.08)) !important;
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin :is([data-harley-settings-panel="true"], [data-harley-settings-panel="true"] *) :is([role="switch"], [aria-checked], button[class*="switch"], button[class*="Switch"]) {
+  background: revert !important;
+  background-color: revert !important;
+  background-image: revert !important;
+  color: revert !important;
+  border-color: revert !important;
+  box-shadow: revert !important;
+}
+
+/* Final polish: settings sidebar parity, readable text, and scoped switches. */
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(aside, nav, [role="navigation"], [data-harley-sidebar="true"]) {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-cool) 10%, rgba(255, 255, 255, 0.54)), color-mix(in srgb, var(--harley-accent-warm) 8%, rgba(255, 255, 255, 0.46))) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(aside, nav, [role="navigation"], [data-harley-sidebar="true"]) :is(button, a, [role="button"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(aside, nav, [role="navigation"], [data-harley-sidebar="true"]) :is(button, a, [role="button"]):hover,
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(aside, nav, [role="navigation"], [data-harley-sidebar="true"]) :is([aria-current], [aria-selected="true"], [data-state="active"]) {
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+
+html.harley-codex-skin #root :is(main, [role="main"]) :is(p, li, h1, h2, h3, h4, label, blockquote):not(pre *):not(code) {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 12px rgba(255, 255, 255, 0.18);
+}
+
+html.harley-codex-skin #root :is(main, [role="main"]) :is(a, [class*="text-blue"], [class*="text-green"], [class*="text-red"], [class*="text-yellow"], [class*="text-emerald"], [class*="text-sky"], [class*="text-purple"], [class*="diff"], [class*="Diff"], [class*="status"], [class*="Status"], [style*="color"]):not(pre *) {
+  color: revert !important;
+  text-shadow: none !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"]) :is([role="switch"], button[aria-checked="true"], button[aria-checked="false"]) {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  padding: 2px !important;
+  border-radius: 999px !important;
+  border: 1px solid color-mix(in srgb, var(--harley-accent) 20%, rgba(255, 255, 255, 0.5)) !important;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.42)) !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    0 4px 12px rgba(40, 48, 56, 0.1) !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"]) :is([role="switch"][aria-checked="true"], button[aria-checked="true"]) {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--harley-accent) 78%, #ffffff), color-mix(in srgb, var(--harley-accent-cool) 58%, var(--harley-accent))) !important;
+  border-color: color-mix(in srgb, var(--harley-accent) 48%, rgba(255, 255, 255, 0.3)) !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"]) :is([role="switch"], button[aria-checked]) > :first-child {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 1px 4px rgba(24, 30, 34, 0.2) !important;
+  transform: translateX(0) !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root :is(main, [role="main"]) :is([role="switch"][aria-checked="true"], button[aria-checked="true"]) > :first-child {
+  transform: translateX(16px) !important;
+}
+
+html[data-harley-appearance="dark"] #root :is(main, [role="main"]) :is(p, li, h1, h2, h3, h4, label, blockquote):not(pre *):not(code) {
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.32);
+}
+
+/* Sidebar final pass: match the calmer settings navigation material. */
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, nav[aria-label], [role="navigation"]:not([aria-label])) {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-cool) 7%, rgba(255, 255, 255, 0.3)), color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.22))) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"]::after {
+  width: 72px !important;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--harley-accent-warm) 6%, rgba(255, 255, 255, 0.12)), transparent) !important;
+}
+
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, nav[aria-label], [role="navigation"]:not([aria-label])) :is(button, a, [role="button"]) {
+  color: rgba(20, 28, 34, 0.86) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, nav[aria-label], [role="navigation"]:not([aria-label])) :is(button, a, [role="button"]):hover,
+html.harley-codex-skin [data-harley-sidebar-active="true"] {
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+
+html[data-harley-appearance="dark"] :is([data-harley-sidebar="true"], aside, nav[aria-label], [role="navigation"]:not([aria-label])) {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--harley-accent-deep) 8%, rgba(12, 11, 11, 0.24)), rgba(8, 8, 8, 0.16)) !important;
+}
+
+/* Preserve Codex semantic colors; readability polish must not flatten state details. */
+html.harley-codex-skin #root :is(
+  a,
+  [class*="text-blue"],
+  [class*="text-green"],
+  [class*="text-red"],
+  [class*="text-yellow"],
+  [class*="text-orange"],
+  [class*="text-emerald"],
+  [class*="text-sky"],
+  [class*="text-purple"],
+  [class*="text-token-success"],
+  [class*="text-token-error"],
+  [class*="diff"],
+  [class*="Diff"],
+  [class*="status"],
+  [class*="Status"],
+  [style*="color"]
+):not(pre *) {
+  color: revert !important;
+  text-shadow: none !important;
+}
+
+/* Sidebar blend pass: keep navigation readable without turning it into a separate plate. */
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-sidebar="true"]::after {
+  right: -128px !important;
+  width: 128px !important;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 76%) !important;
+}
+
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) :is(button, a, [role="button"], li, [class*="bg-"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) :is(button, a, [role="button"]) {
+  color: rgba(18, 26, 32, 0.88) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+}
+
+html.harley-codex-skin :is([data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) :is(button, a, [role="button"]):hover,
+html.harley-codex-skin :is([data-harley-sidebar-active="true"], [aria-current], [aria-selected="true"], [data-state="active"]) {
+  background: rgba(255, 255, 255, 0.11) !important;
+  background-color: rgba(255, 255, 255, 0.11) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] :is([data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) {
+  background:
+    linear-gradient(90deg, rgba(10, 10, 10, 0.2), rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.04)) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(90deg, rgba(10, 10, 10, 0.2), rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.04)) !important;
+}
+
+/* Typography reset: keep Codex semantic colors, avoid dirty haloed text. */
+html.harley-codex-skin #root :is(main, [role="main"]) :is(p, li, h1, h2, h3, h4, h5, h6, label, blockquote, span, div, a, small):not(pre *):not(code):not(svg):not(path) {
+  text-shadow: none !important;
+}
+
+html.harley-codex-skin #root :is(main, [role="main"]) :is([class*="markdown"], [class*="prose"], [data-message-author-role], [data-testid*="conversation"], [class*="conversation"], [class*="Conversation"]) {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+html.harley-codex-skin #root :is(main, [role="main"]) :is([class*="markdown"], [class*="prose"], [data-message-author-role]) {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.08) 72%, transparent) !important;
+  border-radius: 10px !important;
+}
+
+html.harley-codex-skin #root :is(main, [role="main"]) :is([class*="markdown"], [class*="prose"]) :is(a, [class*="text-"], [style*="color"]) {
+  color: revert !important;
+  text-shadow: none !important;
+}
+
+html[data-harley-appearance="dark"] #root :is(main, [role="main"]) :is([class*="markdown"], [class*="prose"], [data-message-author-role]) {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.08) 72%, transparent) !important;
+}
+
+/* Continuous reading surface: avoid striped paragraph backgrounds. */
+html.harley-codex-skin #root :is(main, [role="main"]) :is([class*="markdown"], [class*="prose"], [data-message-author-role]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+html.harley-codex-skin #root :is(main, [role="main"]) :is(
+  [data-testid*="conversation-turn"],
+  [class*="conversation-turn"],
+  [class*="ConversationTurn"],
+  [data-virtualized-turn-content],
+  [class*="group flex min-w-0 flex-col"]
+) {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.075) 76%, transparent) !important;
+  border-radius: 12px !important;
+}
+
+html[data-harley-appearance="dark"] #root :is(main, [role="main"]) :is(
+  [data-testid*="conversation-turn"],
+  [class*="conversation-turn"],
+  [class*="ConversationTurn"],
+  [data-virtualized-turn-content],
+  [class*="group flex min-w-0 flex-col"]
+) {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.075) 76%, transparent) !important;
+}
+
+html.harley-codex-skin :is([data-harley-settings-sidebar="true"], [data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-settings-sidebar="true"] {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin [data-harley-settings-sidebar="true"] :is(button, a, [role="button"], li, [class*="bg-"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin [data-harley-settings-sidebar="true"] :is(button, a, [role="button"]):hover,
+html.harley-codex-skin [data-harley-settings-sidebar="true"] :is([aria-current], [aria-selected="true"], [data-state="active"]) {
+  background: rgba(255, 255, 255, 0.11) !important;
+  background-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+html.harley-codex-skin :is([data-harley-settings-sidebar="true"], [data-harley-sidebar="true"])::after {
+  right: -128px !important;
+  width: 128px !important;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 76%) !important;
+}
+
+html.harley-codex-skin :is([data-harley-settings-sidebar="true"], [data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) :is(button, a, [role="button"], li, [class*="bg-"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin :is([data-harley-settings-sidebar="true"], [data-harley-sidebar="true"], aside, #root nav, #root [role="navigation"]) :is(button, a, [role="button"]):hover,
+html.harley-codex-skin :is([data-harley-sidebar-active="true"], [aria-current], [aria-selected="true"], [data-state="active"]) {
+  background: rgba(255, 255, 255, 0.11) !important;
+  background-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+/* Highest-specificity settings sidebar override; earlier #root settings rules were winning. */
+html.harley-codex-skin[data-harley-settings-mode="true"] #root [data-harley-settings-sidebar="true"],
+html.harley-codex-skin[data-harley-settings-mode="true"] #root [data-harley-settings-sidebar="true"] > nav,
+html.harley-codex-skin[data-harley-settings-mode="true"] #root [data-harley-settings-sidebar="true"] [aria-label="设置"] {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1) 72%, rgba(255, 255, 255, 0.03)) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root [data-harley-settings-sidebar="true"] :is(button, a, [role="button"], [role="link"], li, [class*="bg-"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html.harley-codex-skin[data-harley-settings-mode="true"] #root [data-harley-settings-sidebar="true"] :is(button, a, [role="button"], [role="link"]):hover,
+html.harley-codex-skin[data-harley-settings-mode="true"] #root [data-harley-settings-sidebar="true"] :is([aria-current], [aria-selected="true"], [data-state="active"]) {
+  background: rgba(255, 255, 255, 0.11) !important;
+  background-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+/* Welcome action cards: a quiet panoramic strip under glass, not four loud thumbnails. */
+html.harley-codex-skin [data-harley-soft-card="true"] {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.52)) !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.52)) !important;
+  border-color: rgba(255, 255, 255, 0.48) !important;
+  box-shadow:
+    0 8px 24px rgba(36, 44, 52, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62) !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: var(--harley-card-background, var(--harley-background));
+  background-size: var(--harley-card-bg-size, 400% 100%);
+  background-position: left center;
+  background-repeat: no-repeat;
+  transform: translateX(var(--harley-card-offset-x, 0px));
+  opacity: 0.36;
+  filter: blur(0.25px) saturate(0.96) brightness(1.06);
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.66)),
+    linear-gradient(90deg, color-mix(in srgb, var(--harley-accent-cool) 8%, rgba(255, 255, 255, 0.22)), color-mix(in srgb, var(--harley-accent-warm) 7%, rgba(255, 255, 255, 0.12)));
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"] > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html.harley-codex-skin [data-harley-soft-card="true"]:hover::before {
+  opacity: 0.42;
+}
+
+html[data-harley-appearance="dark"] [data-harley-soft-card="true"]::before {
+  opacity: 0.28;
+  filter: blur(0.25px) saturate(0.9) brightness(0.82);
+}
+
+html[data-harley-appearance="dark"] [data-harley-soft-card="true"]::after {
+  background:
+    linear-gradient(180deg, rgba(18, 18, 18, 0.48), rgba(18, 18, 18, 0.68)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+}

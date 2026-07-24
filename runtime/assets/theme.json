@@ -1,0 +1,38 @@
+{
+  "appearance": "light",
+  "backgrounds": {
+    "light": "background-light.jpg",
+    "dark": "background-dark.jpg",
+    "fallback": "background-light.jpg"
+  },
+  "art": {
+    "focusX": 0.68,
+    "focusY": 0.45,
+    "safeArea": "left",
+    "taskMode": "ambient"
+  },
+  "generation": {
+    "qualityPreset": "performance",
+    "width": 1600,
+    "height": 900,
+    "lightQuality": 84,
+    "darkQuality": 82
+  },
+  "effects": {
+    "material": "balanced"
+  },
+  "colors": {
+    "source": "natural",
+    "accent": "#B99182",
+    "accentWarm": "#CDAEAB",
+    "accentCool": "#D7CBC0",
+    "accentDeep": "#7A5548",
+    "accentMist": "rgba(232, 229, 226, 0.12)",
+    "accentSoft": "rgba(185, 145, 130, 0.22)",
+    "accentText": "#FFFFFF"
+  },
+  "welcome": {
+    "title": "Happy everyday~",
+    "cardsImage": "welcome-cards.png"
+  }
+}
