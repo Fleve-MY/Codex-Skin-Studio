@@ -74,7 +74,6 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 public static class HarleyThemeImage {
@@ -161,11 +160,20 @@ public static class HarleyThemeImage {
   }
 
   private static void SaveJpeg(Bitmap bitmap, string output, long quality) {
-    var encoder = ImageCodecInfo.GetImageEncoders().First(e => e.MimeType == "image/jpeg");
+    var encoder = FindJpegEncoder();
     using (var parameters = new EncoderParameters(1)) {
       parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
       bitmap.Save(output, encoder, parameters);
     }
+  }
+
+  private static ImageCodecInfo FindJpegEncoder() {
+    foreach (var encoder in ImageCodecInfo.GetImageEncoders()) {
+      if (string.Equals(encoder.MimeType, "image/jpeg", StringComparison.OrdinalIgnoreCase)) {
+        return encoder;
+      }
+    }
+    throw new InvalidOperationException("JPEG encoder is not available on this device.");
   }
 
   private static double Clamp01(double value) {
