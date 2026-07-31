@@ -54,6 +54,7 @@ $Manifest = [ordered]@{
   runtime = $RuntimeIdentifier
   portableZip = Split-Path -Leaf $PortableZip
   installer = Split-Path -Leaf $InstallerExe
+  installerMode = "offline-self-contained"
   builtAt = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 }
 $Manifest | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $ReleaseRoot "release.json") -Encoding UTF8
@@ -62,7 +63,7 @@ if (-not $SkipInstaller) {
   dotnet publish $InstallerStubProject `
     -c Release `
     -r $RuntimeIdentifier `
-    --self-contained false `
+    --self-contained true `
     -p:Version=$Version `
     -p:FileVersion=$Version `
     -p:AssemblyVersion=$Version `

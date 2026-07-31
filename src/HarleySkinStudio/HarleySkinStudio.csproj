@@ -10,5 +10,6 @@
     <AssemblyTitle>IcyFre Codex Studio</AssemblyTitle>
     <Product>IcyFre Codex Studio</Product>
     <Company>IcyFre</Company>
+    <ApplicationIcon>..\..\assets\app.ico</ApplicationIcon>
   </PropertyGroup>
 </Project>

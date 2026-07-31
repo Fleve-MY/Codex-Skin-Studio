@@ -9,5 +9,6 @@
     <Title>IcyFre Codex Studio Setup</Title>
     <Product>IcyFre Codex Studio</Product>
     <Company>IcyFre</Company>
+    <ApplicationIcon>..\..\assets\app.ico</ApplicationIcon>
   </PropertyGroup>
 </Project>

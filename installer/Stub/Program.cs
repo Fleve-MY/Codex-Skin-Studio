@@ -32,7 +32,7 @@ internal static class Program
 
             if (quiet)
             {
-                Install(defaultInstallDir, launchAfterInstall: false, version);
+                Install(defaultInstallDir, launchAfterInstall: false, createDesktopShortcut: false, version);
                 return 0;
             }
 
@@ -52,7 +52,7 @@ internal static class Program
         }
     }
 
-    private static void Install(string installDir, bool launchAfterInstall, string version)
+    private static void Install(string installDir, bool launchAfterInstall, bool createDesktopShortcut, string version)
     {
         var installerPath = Environment.ProcessPath ?? throw new InvalidOperationException("Cannot locate installer path.");
         var tempRoot = Path.Combine(Path.GetTempPath(), $"{AppId}-{Guid.NewGuid():N}");
@@ -73,6 +73,10 @@ internal static class Program
 
             var exePath = Path.Combine(installDir, ExeName);
             CreateStartMenuShortcut(exePath, installDir);
+            if (createDesktopShortcut)
+            {
+                CreateDesktopShortcut(exePath, installDir);
+            }
             WriteUninstaller(installDir);
             WriteUninstallRegistry(installDir, exePath, version);
 
@@ -146,11 +150,6 @@ internal static class Program
 
     private static void CreateStartMenuShortcut(string exePath, string installDir)
     {
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            return;
-        }
-
         var startMenuDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Microsoft",
@@ -161,6 +160,23 @@ internal static class Program
         Directory.CreateDirectory(startMenuDir);
 
         var shortcutPath = Path.Combine(startMenuDir, $"{AppName}.lnk");
+        CreateShortcut(shortcutPath, exePath, installDir);
+    }
+
+    private static void CreateDesktopShortcut(string exePath, string installDir)
+    {
+        var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        var shortcutPath = Path.Combine(desktop, $"{AppName}.lnk");
+        CreateShortcut(shortcutPath, exePath, installDir);
+    }
+
+    private static void CreateShortcut(string shortcutPath, string exePath, string installDir)
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return;
+        }
+
         var shellType = Type.GetTypeFromProgID("WScript.Shell");
         if (shellType is null)
         {
@@ -172,6 +188,7 @@ internal static class Program
         shortcut.TargetPath = exePath;
         shortcut.WorkingDirectory = installDir;
         shortcut.Description = AppName;
+        shortcut.IconLocation = exePath;
         shortcut.Save();
     }
 
@@ -186,12 +203,17 @@ internal static class Program
             "Programs",
             Publisher,
             $"{AppName}.lnk");
+        var desktopLink = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+            $"{AppName}.lnk");
 
         var script = string.Join(Environment.NewLine, new[]
         {
             "$ErrorActionPreference = \"Stop\"",
             $"$StartMenuLink = \"{EscapePowerShellString(startMenuLink)}\"",
+            $"$DesktopLink = \"{EscapePowerShellString(desktopLink)}\"",
             "if (Test-Path -LiteralPath $StartMenuLink) { Remove-Item -LiteralPath $StartMenuLink -Force }",
+            "if (Test-Path -LiteralPath $DesktopLink) { Remove-Item -LiteralPath $DesktopLink -Force }",
             $@"Remove-Item -LiteralPath ""HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{AppId}"" -Recurse -Force -ErrorAction SilentlyContinue",
             "Start-Sleep -Milliseconds 300",
             $"Remove-Item -LiteralPath \"{EscapePowerShellString(installDir)}\" -Recurse -Force",
@@ -228,6 +250,7 @@ internal static class Program
         private readonly Button _installButton;
         private readonly Button _cancelButton;
         private readonly CheckBox _launchAfterInstall;
+        private readonly CheckBox _createDesktopShortcut;
         private readonly ProgressBar _progress;
         private readonly Label _status;
         private readonly string _version;
@@ -242,59 +265,96 @@ internal static class Program
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            ClientSize = new Size(560, 300);
+            ClientSize = new Size(620, 390);
             Font = new Font("Microsoft YaHei UI", 9F);
+            var windowIcon = Icon.ExtractAssociatedIcon(Environment.ProcessPath ?? Application.ExecutablePath);
+            if (windowIcon is not null)
+            {
+                Icon = windowIcon;
+            }
+
+            var header = new Panel
+            {
+                BackColor = Color.FromArgb(245, 248, 252),
+                Location = new Point(0, 0),
+                Size = new Size(620, 96)
+            };
+
+            var iconBox = new PictureBox
+            {
+                Image = Icon?.ToBitmap(),
+                Location = new Point(24, 24),
+                Size = new Size(48, 48),
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
 
             var title = new Label
             {
                 Text = $"安装 IcyFre Codex Studio {version}",
                 AutoSize = true,
                 Font = new Font(Font.FontFamily, 14F, FontStyle.Bold),
-                Location = new Point(24, 22)
+                Location = new Point(88, 24)
             };
 
             var summary = new Label
             {
-                Text = "请选择安装位置。安装程序会创建开始菜单快捷方式，并支持从系统设置中卸载。",
+                Text = "离线安装包已内置运行环境。请选择安装位置和快捷方式选项。",
                 AutoSize = false,
-                Size = new Size(510, 42),
-                Location = new Point(24, 62)
+                Size = new Size(500, 36),
+                Location = new Point(88, 56)
             };
+            header.Controls.AddRange(new Control[] { iconBox, title, summary });
 
             var pathLabel = new Label
             {
                 Text = "安装位置",
                 AutoSize = true,
-                Location = new Point(24, 122)
+                Location = new Point(32, 124)
             };
 
             _installPath = new TextBox
             {
                 Text = defaultInstallDir,
-                Location = new Point(24, 146),
-                Size = new Size(410, 26)
+                Location = new Point(32, 148),
+                Size = new Size(456, 26)
             };
 
             var browseButton = new Button
             {
                 Text = "浏览...",
-                Location = new Point(446, 144),
+                Location = new Point(500, 146),
                 Size = new Size(88, 30)
             };
             browseButton.Click += (_, _) => BrowseInstallPath();
+
+            var optionsGroup = new GroupBox
+            {
+                Text = "安装选项",
+                Location = new Point(32, 196),
+                Size = new Size(556, 84)
+            };
 
             _launchAfterInstall = new CheckBox
             {
                 Text = "安装完成后启动 IcyFre Codex Studio",
                 Checked = true,
                 AutoSize = true,
-                Location = new Point(24, 190)
+                Location = new Point(18, 24)
             };
+
+            _createDesktopShortcut = new CheckBox
+            {
+                Text = "创建桌面快捷方式",
+                Checked = true,
+                AutoSize = true,
+                Location = new Point(18, 52)
+            };
+            optionsGroup.Controls.AddRange(new Control[] { _launchAfterInstall, _createDesktopShortcut });
 
             _progress = new ProgressBar
             {
-                Location = new Point(24, 222),
-                Size = new Size(510, 14),
+                Location = new Point(32, 304),
+                Size = new Size(556, 14),
                 Style = ProgressBarStyle.Continuous
             };
 
@@ -303,13 +363,13 @@ internal static class Program
                 Text = "准备安装",
                 AutoSize = false,
                 Size = new Size(330, 28),
-                Location = new Point(24, 252)
+                Location = new Point(32, 336)
             };
 
             _installButton = new Button
             {
                 Text = "安装",
-                Location = new Point(356, 248),
+                Location = new Point(404, 332),
                 Size = new Size(82, 32)
             };
             _installButton.Click += (_, _) => InstallNow();
@@ -317,19 +377,18 @@ internal static class Program
             _cancelButton = new Button
             {
                 Text = "取消",
-                Location = new Point(452, 248),
+                Location = new Point(502, 332),
                 Size = new Size(82, 32)
             };
             _cancelButton.Click += (_, _) => Close();
 
             Controls.AddRange(new Control[]
             {
-                title,
-                summary,
+                header,
                 pathLabel,
                 _installPath,
                 browseButton,
-                _launchAfterInstall,
+                optionsGroup,
                 _progress,
                 _status,
                 _installButton,
@@ -369,7 +428,7 @@ internal static class Program
                 _status.Text = "正在安装...";
                 Application.DoEvents();
 
-                Install(path, _launchAfterInstall.Checked, _version);
+                Install(path, _launchAfterInstall.Checked, _createDesktopShortcut.Checked, _version);
 
                 _progress.Style = ProgressBarStyle.Continuous;
                 _progress.Value = 100;
